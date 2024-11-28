@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import dbConnect from "@/lib/dbConnect";
 import { ContentModel } from "@/models/content.model";
 import { TagsModel } from "@/models/tags.model";
@@ -11,7 +10,7 @@ import {
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/options";
 
-export async function PUT(request: Request, response: Response) {
+export async function PUT(request: Request) {
   await dbConnect();
 
   try {

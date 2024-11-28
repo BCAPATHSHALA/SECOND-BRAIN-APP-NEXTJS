@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import dbConnect from "@/lib/dbConnect";
 import { ContentModel } from "@/models/content.model";
 
@@ -10,7 +9,7 @@ import {
   TDeleteContentSchema,
 } from "@/schemas/content.schemas";
 
-export async function DELETE(request: Request, response: Response) {
+export async function DELETE(request: Request) {
   await dbConnect();
 
   try {

@@ -1,19 +1,14 @@
 import dbConnect from "@/lib/dbConnect";
-import {
-  TGetSharedLinkSchema,
-  getSharedLinkSchema,
-} from "@/schemas/brain.schemas";
+import { getSharedLinkSchema } from "@/schemas/brain.schemas";
 import { LinkModel } from "@/models/link.model";
 import { ContentModel } from "@/models/content.model";
 
-export async function GET(
-  request: Request,
-  { params }: { params: { sharedHash: string } }
-) {
+export async function GET(request: Request) {
   await dbConnect();
 
   try {
-     const { sharedHash }: TGetSharedLinkSchema = params;
+    const url = new URL(request.url);
+    const sharedHash = url.pathname.split("/").pop();
 
     const parsed = getSharedLinkSchema.safeParse({
       sharedHash,

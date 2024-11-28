@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import dbConnect from "@/lib/dbConnect";
 import { ContentModel } from "@/models/content.model";
 
@@ -6,7 +5,7 @@ import { ContentModel } from "@/models/content.model";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/options";
 
-export async function GET(request: Request, response: Response) {
+export async function GET() {
   await dbConnect();
 
   try {
@@ -39,7 +38,7 @@ export async function GET(request: Request, response: Response) {
       {
         success: true,
         message: "Content fetched successfully",
-        data: content ,
+        data: content,
       },
       { status: 200 }
     );
