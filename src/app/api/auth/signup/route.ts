@@ -58,7 +58,7 @@ export async function POST(request: Request) {
       {
         success: true,
         message: "User registered successfully",
-        data: { username },
+        data: username,
       },
       { status: 201 }
     );
