@@ -84,7 +84,7 @@ export async function POST(request: Request) {
       {
         success: true,
         message: "Content created successfully",
-        data: { newContent },
+        data: newContent,
       },
       { status: 201 }
     );

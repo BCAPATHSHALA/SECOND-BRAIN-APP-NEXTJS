@@ -102,7 +102,7 @@ export async function PUT(request: Request, response: Response) {
       {
         success: true,
         message: "Content updated successfully",
-        data: { updatedContent },
+        data: updatedContent,
       },
       { status: 200 }
     );

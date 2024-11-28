@@ -59,7 +59,7 @@ export async function DELETE(request: Request, response: Response) {
       {
         success: true,
         message: "Content deleted successfully",
-        data: { content },
+        data: content,
       },
       { status: 200 }
     );

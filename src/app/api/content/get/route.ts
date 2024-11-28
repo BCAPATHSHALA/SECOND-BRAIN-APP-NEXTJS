@@ -39,7 +39,7 @@ export async function GET(request: Request, response: Response) {
       {
         success: true,
         message: "Content fetched successfully",
-        data: { content },
+        data: content ,
       },
       { status: 200 }
     );
