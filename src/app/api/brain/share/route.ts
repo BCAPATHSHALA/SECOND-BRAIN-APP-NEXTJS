@@ -52,7 +52,7 @@ export async function POST(request: Request) {
             message: "Link shared successfully",
             hash: existingLink.hash,
           },
-          { status: 403 }
+          { status: 201 }
         );
       }
 
