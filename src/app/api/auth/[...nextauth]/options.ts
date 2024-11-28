@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -46,11 +47,11 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async signIn({ user, account }: { user: any; account: any }) {
-      console.log("SIGNIN CALLBACK:", user, account);
+      // console.log("SIGNIN CALLBACK:", user, account);
       return true;
     },
     async jwt({ token, user, account, trigger, session }) {
-      console.log("JWT CALLBACK:", token, user, account, trigger, session);
+      // console.log("JWT CALLBACK:", token, user, account, trigger, session);
       if (user) {
         token._id = user._id?.toString();
         token.username = user.username;
@@ -59,7 +60,7 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     async session({ session, token }) {
-      console.log("SESSION CALLBACK:", session, token);
+      // console.log("SESSION CALLBACK:", session, token);
       if (token) {
         session.user._id = token._id;
         session.user.username = token.username;
