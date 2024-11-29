@@ -39,14 +39,14 @@ const HomePage = () => {
           <div className="flex justify-center mb-8">
             <BrainIcon className="h-24 w-24 text-mediumslateblue" />
           </div>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 font-noto-serif text-oxfordblue">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 font-noto-serif text-oxfordblue font-PaytoneOne">
             Your Digital Second Brain
           </h1>
           <p className="text-sm md:text-2xl mb-8 text-battleshipgray max-w-2xl mx-auto font-playpen-sans">
             Organize your thoughts, ideas, and information in one place.
             Accessible from anywhere, at any time.
           </p>
-          <p className="text-sm md:text-2xl mb-8 text-oxfordblue max-w-2xl mx-auto font-playpen-sans">
+          <p className="text-xl mb-8 text-oxfordblue max-w-2xl mx-auto font-playpen-sans">
             Sign up now to start organizing your thoughts and ideas without
             worrying about{" "}
             <span className="font-semibold text-mediumslateblue ">emails</span>.

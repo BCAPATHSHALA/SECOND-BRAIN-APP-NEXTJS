@@ -1,3 +1,5 @@
+@import "@fontsource/paytone-one";
+@import "@fontsource-variable/roboto-serif";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
