@@ -8,6 +8,7 @@ import Button from "../ui/button";
 import { format } from "date-fns";
 import { Brain, ExternalLink } from "lucide-react";
 import { BoltIcon } from "@heroicons/react/24/solid";
+import { BackgroundLinesDemo } from "../BackgroundLinesDemo";
 
 interface SharedLink {
   _id: string;
@@ -63,40 +64,36 @@ const SharedLinkListingPage = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 flex flex-col gap-4">
-      <div className="w-full flex justify-center items-center bg-oxfordblue h-fit flex-col rounded-lg gap-4">
-        <div className="flex flex-col justify-center items-center gap-2 py-8">
-          <h1 className="text-2xl font-semibold text-mediumslateblue uppercase font-serif">
-            All Second Brain Links
-          </h1>
-          <p className="text-sm text-mediumslateblue">
-            Share your Second Brain with the world
-          </p>
-        </div>
-        <div className="w-full flex justify-center items-center gap-4 pb-8 ">
+    <div className="container mx-auto flex flex-col gap-4">
+      <BackgroundLinesDemo
+        title={`All Second Brain Links`}
+        description="Share your Second Brain with the world"
+        primaryBTN={
           <Link href="/dashboard">
             <Button
               variant="primary"
-              size="md"
-              className="w-full"
+              size="lg"
+              className="w-full text-sm md:text-lg"
               startIcon={<Brain className="w-4 h-4" />}
             >
               Create New Brain
             </Button>
           </Link>
+        }
+        secondaryBTN={
           <Link href="/">
             <Button
               variant="secondary"
-              size="md"
-              className="w-full"
+              size="lg"
+              className="w-full text-sm md:text-lg"
               startIcon={<BoltIcon className="w-4 h-4" />}
             >
               Back to Second Brain
             </Button>
           </Link>
-        </div>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        }
+      />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:p-8 p-2">
         {sharedLinks.map((link) => (
           <div key={link._id} className="bg-white shadow-md rounded-lg p-4">
             <h2 className="text-lg font-semibold mb-2 text-mediumslateblue">

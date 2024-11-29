@@ -18,6 +18,10 @@ export default {
         oxfordblue: "#171B2D",
         battleshipgray: "#888D93",
       },
+      fontFamily: {
+        PaytoneOne: ["Paytone One", "sans-serif"],
+        RobotoSerifVar: ["Roboto Serif Variable", "serif"],
+      },
     },
   },
   plugins: [],

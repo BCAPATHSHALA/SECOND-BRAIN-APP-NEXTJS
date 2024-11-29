@@ -8,6 +8,7 @@ import Card from "../ui/card";
 import Button from "../ui/button";
 import { Brain } from "lucide-react";
 import { BoltIcon } from "@heroicons/react/24/solid";
+import { BackgroundLinesDemo } from "../BackgroundLinesDemo";
 
 interface Content {
   _id: string;
@@ -62,42 +63,37 @@ const SharedBrainPage = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 flex flex-col gap-4">
-      <div className="w-full flex justify-center items-center bg-oxfordblue h-fit flex-col rounded-lg gap-4">
-        <div className="flex flex-col justify-center items-center gap-2 py-8">
-          <h1 className="text-2xl font-semibold text-mediumslateblue uppercase font-serif">
-            Second Brain
-          </h1>
-          <p className="text-sm text-mediumslateblue">
-            Second Brain is a free and open source platform for creating and
-            sharing content.
-          </p>
-        </div>
-        <div className="w-full flex justify-center items-center gap-4 pb-8 ">
+    <div className="container mx-auto flex flex-col gap-4">
+      <BackgroundLinesDemo
+        title={`Second Brain of ${sharedHash}`}
+        description="Second Brain is a free and open source platform for creating and sharing
+        content."
+        primaryBTN={
           <Link href="/dashboard">
             <Button
               variant="primary"
-              size="md"
-              className="w-full"
+              size="lg"
+              className="w-full text-sm md:text-lg"
               startIcon={<Brain className="w-4 h-4" />}
             >
               Create New Brain
             </Button>
           </Link>
+        }
+        secondaryBTN={
           <Link href="/all-shared-links">
             <Button
               variant="secondary"
-              size="md"
-              className="w-full"
+              size="lg"
+              className="w-full text-sm md:text-lg"
               startIcon={<BoltIcon className="w-4 h-4" />}
             >
               All Second Brain
             </Button>
           </Link>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+        }
+      />
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 md:p-8 p-2">
         {contents.map((content) => (
           <Card
             key={content._id}
