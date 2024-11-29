@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://2ndbrain.vercel.app/"),
@@ -38,7 +39,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`font-RobotoSerifVar antialiased`}>{children}</body>
+      <body className={`font-RobotoSerifVar antialiased`}>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
