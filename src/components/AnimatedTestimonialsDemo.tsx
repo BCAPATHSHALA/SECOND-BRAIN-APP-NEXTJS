@@ -66,7 +66,7 @@ export function AnimatedTestimonialsDemo() {
           className="w-full h-full"
           onClick={() => setOpen(true)}
         >
-          Give Your Feedback
+          <span className="text-2xl md:text-3xl font-PaytoneOne">Give Your Feedback</span>
         </Button>
       </div>
       {/* Modal */}

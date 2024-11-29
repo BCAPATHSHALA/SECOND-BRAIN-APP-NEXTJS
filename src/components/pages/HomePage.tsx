@@ -3,6 +3,8 @@ import Link from "next/link";
 import { AnimatedTestimonialsDemo } from "../AnimatedTestimonialsDemo";
 import Footer from "../layout/Footer";
 import { WobbleCardDemo } from "../WobbleCardDemo";
+import { TextHoverEffectDemo } from "../TextHoverEffectDemo";
+import { Spotlight } from "../ui/Spotlight";
 
 const HomePage = () => {
   return (
@@ -10,6 +12,11 @@ const HomePage = () => {
       {/* Hero Section */}
       <div className="min-h-screen w-full bg-gradient-to-b from-seasalt to-gray-100 flex flex-col justify-center items-center px-4 py-12 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
+          <Spotlight
+            className="-top-40 left-0 md:left-60 md:-top-20"
+            fill="black"
+          />
+
           <div className="flex justify-center mb-8">
             <BrainIcon className="h-24 w-24 text-mediumslateblue" />
           </div>
@@ -20,7 +27,7 @@ const HomePage = () => {
             Organize your thoughts, ideas, and information in one place.
             Accessible from anywhere, at any time.
           </p>
-          <p className="text-xl mb-8 text-oxfordblue max-w-2xl mx-auto font-playpen-sans">
+          <p className="text-sm mb-8 text-oxfordblue max-w-2xl mx-auto font-playpen-sans">
             Sign up now to start organizing your thoughts and ideas without
             worrying about{" "}
             <span className="font-semibold text-mediumslateblue ">emails</span>.
@@ -43,13 +50,16 @@ const HomePage = () => {
           </div>
         </div>
       </div>
+      <section className="w-full bg-oxfordblue">
+        <TextHoverEffectDemo />
+      </section>
       {/* Testimonials */}
       <section className="w-full bg-seasalt">
         <AnimatedTestimonialsDemo />
       </section>
       {/* ABOUT */}
       <section className="w-full bg-seasalt mb-4 mt-4">
-        <WobbleCardDemo/>
+        <WobbleCardDemo />
       </section>
       {/* Footer Section */}
       <Footer />
