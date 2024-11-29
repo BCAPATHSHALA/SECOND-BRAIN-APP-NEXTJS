@@ -67,6 +67,7 @@ const SharedLinkListingPage = () => {
   return (
     <>
       <div className="container mx-auto flex flex-col gap-4">
+        <div className="relative">
         <BackgroundLinesDemo
           title={`All Second Brain Links`}
           description="Share your Second Brain with the world"
@@ -95,6 +96,7 @@ const SharedLinkListingPage = () => {
             </Link>
           }
         />
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:p-8 p-2 bg-gray-100">
           {sharedLinks.map((link) => (
             <div key={link._id} className="bg-white shadow-md rounded-lg p-4">
