@@ -2,6 +2,7 @@ import { BrainIcon, LightbulbIcon, ShareIcon } from "lucide-react";
 import Link from "next/link";
 import { AnimatedTestimonialsDemo } from "../AnimatedTestimonialsDemo";
 import Footer from "../layout/Footer";
+import { WobbleCardDemo } from "../WobbleCardDemo";
 
 const HomePage = () => {
   return (
@@ -45,6 +46,10 @@ const HomePage = () => {
       {/* Testimonials */}
       <section className="w-full bg-seasalt">
         <AnimatedTestimonialsDemo />
+      </section>
+      {/* ABOUT */}
+      <section className="w-full bg-seasalt mb-4 mt-4">
+        <WobbleCardDemo/>
       </section>
       {/* Footer Section */}
       <Footer />
