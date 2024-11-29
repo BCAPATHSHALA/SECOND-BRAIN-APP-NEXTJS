@@ -48,8 +48,8 @@ export function WobbleCardDemo() {
         </div>
         <Image
           src="/bolt.svg"
-          width={500}
-          height={500}
+          width={400}
+          height={400}
           alt="second brain - 10xTech Infinity"
           className="absolute -right-10 md:-right-[40%] lg:-right-[20%] -bottom-10 object-contain rounded-2xl"
         />
