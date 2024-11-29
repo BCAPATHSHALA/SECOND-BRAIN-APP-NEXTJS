@@ -59,7 +59,7 @@ export function AnimatedTestimonialsDemo() {
   return (
     <div className="flex justify-center flex-col">
       <AnimatedTestimonials testimonials={testimonials} autoplay={true} />
-      <div className="bg-primary ms:w-1/4 w-full h-32 md:h-auto flex justify-center items-center  ">
+      <div className="bg-primary w-full h-32 md:h-32 flex justify-center items-center  ">
         <Button
           variant="primary"
           size="lg"
