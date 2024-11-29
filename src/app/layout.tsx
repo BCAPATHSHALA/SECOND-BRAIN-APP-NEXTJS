@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Second Brain - A Note Taking & Sharing App",
-  description: "Second Brain is a free for creating and sharing content.",
+  metadataBase: new URL("https://2ndbrain.vercel.app/"),
+  title: "Second Brain - A Note Taking App",
+  description: "Second Brain is a free for creating and sharing content. ",
   keywords: [
     "Second Brain",
     "Content Creation",
@@ -13,6 +14,20 @@ export const metadata: Metadata = {
   ],
   icons: {
     icon: "/favicon.svg",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  verification: {
+    google: "klk7ERNcZtbq9W3ycZxJn4q2K9K6gOP-YmVO8A3ZVTY",
   },
 };
 
