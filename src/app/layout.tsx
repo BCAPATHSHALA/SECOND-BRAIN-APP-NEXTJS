@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://2ndbrain.vercel.app/"),
@@ -42,6 +43,7 @@ export default function RootLayout({
       <body className={`font-RobotoSerifVar antialiased`}>
         {children}
         <Analytics />
+        <Toaster position="top-center" reverseOrder={false} />
       </body>
     </html>
   );
