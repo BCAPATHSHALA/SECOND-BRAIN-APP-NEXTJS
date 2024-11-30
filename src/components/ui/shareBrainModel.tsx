@@ -9,6 +9,7 @@ import {
   ClipboardDocumentCheckIcon,
 } from "@heroicons/react/24/solid";
 import Button from "./button";
+import toast from "react-hot-toast";
 
 interface ShareBrainModalProps {
   open: boolean;
@@ -19,8 +20,10 @@ const ShareBrainModal = ({ open, onClose }: ShareBrainModalProps) => {
   const [isShared, setIsShared] = useState(false);
   const [shareLink, setShareLink] = useState("");
   const [isCopied, setIsCopied] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleShare = async () => {
+    setLoading(true);
     try {
       const response = await axios.post(
         `/api/brain/share`,
@@ -30,13 +33,18 @@ const ShareBrainModal = ({ open, onClose }: ShareBrainModalProps) => {
       if (response.data.success) {
         setIsShared(true);
         setShareLink(`${window.location.origin}/shared/${response.data.hash}`);
+        toast.success(response.data.message);
       }
     } catch (error) {
       console.error("Error sharing brain:", error);
+      toast.error("Failed to share brain");
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleUnshare = async () => {
+    setLoading(true);
     try {
       const response = await axios.post(
         `/api/brain/share`,
@@ -46,15 +54,20 @@ const ShareBrainModal = ({ open, onClose }: ShareBrainModalProps) => {
       if (response.data.success) {
         setIsShared(false);
         setShareLink("");
+        toast.success(response.data.message);
       }
     } catch (error) {
       console.error("Error unsharing brain:", error);
+      toast.error("Failed to unshare brain");
+    } finally {
+      setLoading(false);
     }
   };
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(shareLink).then(() => {
       setIsCopied(true);
+      toast.success("Link copied to clipboard");
       setTimeout(() => setIsCopied(false), 2000);
     });
   };
@@ -105,8 +118,9 @@ const ShareBrainModal = ({ open, onClose }: ShareBrainModalProps) => {
                   size="md"
                   onClick={handleUnshare}
                   className="w-full"
+                  disabled={loading}
                 >
-                  Stop Sharing
+                  {loading ? "Unsharing..." : "Unshare My Brain"}
                 </Button>
               </>
             ) : (
@@ -117,8 +131,9 @@ const ShareBrainModal = ({ open, onClose }: ShareBrainModalProps) => {
                   size="md"
                   onClick={handleShare}
                   className="w-full"
+                  disabled={loading}
                 >
-                  Share My Brain
+                  {loading ? "Sharing..." : "Share My Brain"}
                 </Button>
               </>
             )}

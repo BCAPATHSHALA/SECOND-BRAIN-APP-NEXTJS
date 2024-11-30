@@ -3,48 +3,12 @@
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { XMarkIcon } from "@heroicons/react/16/solid";
 import axios from "axios";
 import Button from "./button";
-
-// Define the content types based on your API
-const ContentTypes = [
-  "YOUTUBE",
-  "TWITTER",
-  "DOCUMENT",
-  "LINK",
-  "TAG",
-  "CONTENT",
-] as const;
-
-const contentSchema = z.object({
-  title: z
-    .string()
-    .min(10, { message: "Title must be at least 10 characters" })
-    .max(100, { message: "Title must be at most 100 characters" }),
-  type: z // How to make sure type is one of the ContentTypes. So we can use refine() to apply a custom error message.
-    .enum(ContentTypes)
-    .refine((val) => ContentTypes.includes(val), {
-      message: `Type must be one of ${ContentTypes.join(", ")}`,
-    }),
-  tags: z
-    .array(z.string())
-    .max(20, { message: "Tags must be at most 20 characters" })
-    .optional(),
-  link: z // How to make the link field optional but still validate as a URL if provided. So we can use z.preprocess() to handle empty strings as undefined before applying the .url() validation.
-    .preprocess(
-      (value) =>
-        typeof value === "string" && value.trim() === "" ? undefined : value,
-      z.string().url({ message: "Link must be a valid URL" }).optional()
-    ),
-  content: z
-    .string()
-    .max(1000, { message: "Content must be at most 1000 characters" })
-    .optional(),
-});
-
-type ContentFormInputs = z.infer<typeof contentSchema>;
+import { contentSchema, TContentSchema } from "@/schemas/content.schemas";
+import toast from "react-hot-toast";
+import { ContentTypes } from "@/utils/constant";
 
 interface CreateContentModalProps {
   open: boolean;
@@ -54,17 +18,19 @@ interface CreateContentModalProps {
 const CreateContentModal = ({ open, onClose }: CreateContentModalProps) => {
   const [error, setError] = useState<string | null>(null);
   const [tags, setTags] = useState<string[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<ContentFormInputs>({
+  } = useForm<TContentSchema>({
     resolver: zodResolver(contentSchema),
   });
 
-  const onSubmit: SubmitHandler<ContentFormInputs> = async (data) => {
+  const onSubmit: SubmitHandler<TContentSchema> = async (data) => {
+    setLoading(true);
     try {
       const response = await axios.post(
         `/api/content/create`,
@@ -80,12 +46,13 @@ const CreateContentModal = ({ open, onClose }: CreateContentModalProps) => {
         }
       );
       if (response.data.success) {
-        console.log("Content created successfully:", response.data.message);
+        toast.success(response.data.message);
         reset();
         setTags([]);
         onClose();
       } else {
         setError(response.data.message || "Failed to create content");
+        toast.error(response.data.message);
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -93,10 +60,14 @@ const CreateContentModal = ({ open, onClose }: CreateContentModalProps) => {
           error.response?.data?.message ||
             "An error occurred while creating content"
         );
+        toast.error(error.response?.data?.message || "An error occurred");
       } else {
         setError("An unexpected error occurred");
+        toast.error("An unexpected error occurred");
       }
       console.error("Error creating content:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -211,8 +182,9 @@ const CreateContentModal = ({ open, onClose }: CreateContentModalProps) => {
               variant="primary"
               size="lg"
               className="w-full"
+              disabled={loading}
             >
-              Create Content
+              {loading ? "Creating..." : "Create Content"}
             </Button>
           </form>
         </div>

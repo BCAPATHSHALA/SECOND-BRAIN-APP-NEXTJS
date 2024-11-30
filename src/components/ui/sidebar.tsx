@@ -15,10 +15,12 @@ import {
 import Button from "./button";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
+import toast from "react-hot-toast";
 
 const Sidebar = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     // set isMobile to true if window width is 768px or less is mobile
@@ -43,6 +45,19 @@ const Sidebar = () => {
     { title: "Link", icon: <LinkIcon className="w-6 h-6" /> },
     { title: "Tag", icon: <HashIcon className="w-6 h-6" /> },
   ];
+
+  const submitSignOut = async () => {
+    setLoading(true);
+    try {
+      await signOut();
+      toast.success("Signed out successfully");
+    } catch (error) {
+      console.error("Error signing out:", error);
+      toast.error("Failed to sign out");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <>
@@ -73,9 +88,10 @@ const Sidebar = () => {
             startIcon={<LogOut className="w-4 h-4" />}
             variant="secondary"
             size="lg"
-            onClick={() => signOut()}
+            onClick={() => submitSignOut()}
+            disabled={loading}
           >
-            Sign Out
+            {loading ? "Signing out..." : "Sign out"}
           </Button>
         </div>
       </div>

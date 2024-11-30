@@ -7,6 +7,7 @@ import { XMarkIcon } from "@heroicons/react/16/solid";
 import axios from "axios";
 import Button from "./button";
 import { feedbackSchema, TFeedbackSchema } from "@/schemas/feedback.schemas";
+import toast from "react-hot-toast";
 
 interface CreateFeedbackModalProps {
   open: boolean;
@@ -15,6 +16,7 @@ interface CreateFeedbackModalProps {
 
 const CreateFeedbackModal = ({ open, onClose }: CreateFeedbackModalProps) => {
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const {
     register,
@@ -26,6 +28,7 @@ const CreateFeedbackModal = ({ open, onClose }: CreateFeedbackModalProps) => {
   });
 
   const onSubmit: SubmitHandler<TFeedbackSchema> = async (data) => {
+    setLoading(true);
     try {
       const response = await axios.post(
         `/api/feedback/create`,
@@ -40,22 +43,26 @@ const CreateFeedbackModal = ({ open, onClose }: CreateFeedbackModalProps) => {
         }
       );
       if (response.data.success) {
-        console.log(response.data.message);
+        toast.success(response.data.message);
         reset();
         onClose();
       } else {
         setError(response.data.message || "Failed to create feedback");
       }
     } catch (error) {
+      console.error("Error creating feedback:", error);
       if (axios.isAxiosError(error)) {
         setError(
           error.response?.data?.message ||
             "An error occurred while creating feedback"
         );
+        toast.error(error.response?.data?.message);
       } else {
         setError("An unexpected error occurred");
+        toast.error("An unexpected error occurred");
       }
-      console.error("Error creating feedback:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -159,8 +166,9 @@ const CreateFeedbackModal = ({ open, onClose }: CreateFeedbackModalProps) => {
               variant="primary"
               size="lg"
               className="w-full"
+              disabled={loading}
             >
-              Give Feedback
+              {loading ? "Giving Feedback..." : "Give Feedback"}
             </Button>
           </form>
         </div>

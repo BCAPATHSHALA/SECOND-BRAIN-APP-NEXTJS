@@ -8,6 +8,7 @@ import Card from "@/components/ui/card";
 import CreateContentModal from "@/components/ui/createContentModal";
 import Sidebar from "@/components/ui/sidebar";
 import ShareBrainModal from "@/components/ui/shareBrainModel";
+import toast from "react-hot-toast";
 
 interface Content {
   _id: string;
@@ -23,6 +24,7 @@ const DashboardPage = () => {
   const [open, setOpen] = useState(false);
   const [openShareModal, setOpenShareModal] = useState(false);
   const [contents, setContents] = useState<Content[]>([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchContents();
@@ -42,6 +44,7 @@ const DashboardPage = () => {
   };
 
   const handleDelete = async (id: string) => {
+    setLoading(true);
     try {
       const response = await axios.delete(`/api/content/delete`, {
         data: { contentId: id },
@@ -52,9 +55,13 @@ const DashboardPage = () => {
       });
       if (response.data.success) {
         setContents(contents.filter((content) => content._id !== id));
+        toast.success(response.data.message);
       }
     } catch (error) {
       console.error("Error deleting content:", error);
+      toast.error("Failed to delete content");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -85,7 +92,12 @@ const DashboardPage = () => {
         {/* Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
           {contents.map((contentD) => (
-            <Card key={contentD._id} {...contentD} onDelete={handleDelete} />
+            <Card
+              key={contentD._id}
+              {...contentD}
+              onDelete={handleDelete}
+              loading={loading}
+            />
           ))}
         </div>
 

@@ -19,6 +19,7 @@ interface CardProps {
   createdAt: string;
   onDelete: (id: string) => void;
   content?: string;
+  loading?: boolean;
 }
 
 const Card = ({
@@ -30,6 +31,7 @@ const Card = ({
   content,
   createdAt,
   onDelete,
+  loading,
 }: CardProps) => {
   const getIcon = () => {
     switch (type) {
@@ -84,6 +86,7 @@ const Card = ({
               onClick={() => onDelete(_id)}
               className="text-battleshipgray hover:text-red-500 transition-colors duration-300"
               aria-label="Delete"
+              disabled={loading || false}
             >
               <TrashIcon className="w-5 h-5" />
             </button>

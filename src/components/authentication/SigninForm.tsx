@@ -8,10 +8,13 @@ import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { signinSchema, TSigninSchema } from "@/schemas/user.schemas";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import Button from "../ui/button";
 
 export default function SignInForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const {
@@ -23,6 +26,7 @@ export default function SignInForm() {
   });
 
   const onSubmit: SubmitHandler<TSigninSchema> = async (data) => {
+    setLoading(true);
     try {
       const result = await signIn("credentials", {
         redirect: false,
@@ -32,13 +36,15 @@ export default function SignInForm() {
 
       if (result?.ok) {
         router.push("/dashboard");
-        console.log("Signin successful:", result);
+        toast.success("Signin successful");
       } else {
         setError(result?.error || "Signin failed");
       }
     } catch (error: any) {
       setError(error || "An unexpected error occurred");
-      console.error("Error during signin:", error);
+      toast.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -97,12 +103,14 @@ export default function SignInForm() {
           {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
 
           <div>
-            <button
+            <Button
+              variant="primary"
+              className="w-full"
               type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-mediumslateblue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mediumslateblue"
+              disabled={loading}
             >
-              Sign in
-            </button>
+              {loading ? "Signing in..." : "Sign in"}
+            </Button>
           </div>
         </form>
       </div>

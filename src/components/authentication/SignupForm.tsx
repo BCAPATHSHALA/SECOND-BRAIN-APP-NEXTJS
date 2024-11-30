@@ -6,6 +6,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import axios from "axios";
 import { signupSchema, TSignupSchema } from "@/schemas/user.schemas";
+import toast from "react-hot-toast";
+import Button from "../ui/button";
 
 export default function SignUpForm({
   setIsSignIn,
@@ -15,6 +17,7 @@ export default function SignUpForm({
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -25,6 +28,7 @@ export default function SignUpForm({
   });
 
   const onSubmit: SubmitHandler<TSignupSchema> = async (data) => {
+    setLoading(true);
     try {
       const response = await axios.post(`/api/auth/signup`, data, {
         withCredentials: true,
@@ -34,19 +38,24 @@ export default function SignUpForm({
       });
       if (response.data.success) {
         setIsSignIn(true); // Redirect to the sign-in page
-        console.log("Signup successful:", response.data.message);
+        toast.success(response.data.message);
       } else {
         setError(response.data.message || "Signup failed");
+        toast.error(response.data.message);
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
         setError(
           error.response?.data?.message || "An error occurred during signup"
         );
+        toast.error(error.response?.data?.message);
       } else {
         setError("An unexpected error occurred");
+        toast.error("An unexpected error occurred");
       }
       console.error("Error during signup:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -133,12 +142,14 @@ export default function SignUpForm({
           {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
 
           <div>
-            <button
+            <Button
+              variant="primary"
               type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-mediumslateblue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mediumslateblue"
+              className="w-full"
+              disabled={loading}
             >
-              Sign up
-            </button>
+              {loading ? "Signing up..." : "Sign up"}
+            </Button>
           </div>
         </form>
       </div>
