@@ -57,7 +57,7 @@ export async function middleware(request: NextRequest) {
 
 // Check if the route is protected
 function isProtectedRoute(pathname: string): boolean {
-  const protectedRoutes = ["/dashboard", "/admin"];
+  const protectedRoutes = ["/dashboard", "/admin", "/admindashboard"];
   return protectedRoutes.some((route) => pathname.startsWith(route));
 }
 
@@ -65,6 +65,7 @@ function isProtectedRoute(pathname: string): boolean {
 function hasAccess(token: any, pathname: string): boolean {
   const roleAccess: { [key: string]: string[] } = {
     "/admin": ["admin"],
+    "/admindashboard": ["admin"],
     "/dashboard": ["user", "admin"],
   };
 
@@ -86,5 +87,6 @@ export const config = {
     "/api/admin/:path*",
     "/api/content/:path*",
     "/api/brain/create",
+    "/admindashboard/:path*",
   ],
 };

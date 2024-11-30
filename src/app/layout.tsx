@@ -40,6 +40,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* Add Twitter script here */}
+        <script src="https://platform.twitter.com/widgets.js" async></script>
+      </head>
       <body className={`font-RobotoSerifVar antialiased`}>
         {children}
         <Analytics />
