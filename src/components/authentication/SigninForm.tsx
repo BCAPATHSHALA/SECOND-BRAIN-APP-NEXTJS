@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
@@ -41,8 +42,9 @@ export default function SignInForm() {
         setError(result?.error || "Signin failed");
       }
     } catch (error: any) {
-      setError(error || "An unexpected error occurred");
-      toast.error(error);
+      setError("Sometning went wrong while signin, please try again");
+      toast.error("Sometning went wrong while signin, please try again");
+      console.error("Error during signin:", error);
     } finally {
       setLoading(false);
     }

@@ -45,14 +45,9 @@ export default function SignUpForm({
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        setError(
-          error.response?.data?.message || "An error occurred during signup"
-        );
-        toast.error(error.response?.data?.message);
-      } else {
-        setError("An unexpected error occurred");
-        toast.error("An unexpected error occurred");
-      }
+        setError("Sometning went wrong while signup, please try again");
+        toast.error("Sometning went wrong while signup, please try again");
+      } 
       console.error("Error during signup:", error);
     } finally {
       setLoading(false);
